@@ -64,7 +64,7 @@ need_data_cb (GstElement * source, guint length, guint8 * data)
   GstBuffer *buf;
   GstFlowReturn flowret;
 
-  GST_DEBUG_OBJECT (source, "lenght:%u data:%p", length, data);
+  GST_ERROR_OBJECT (source, "lenght:%u data:%p", length, data);
 
   if (offset >= total_size) {
     g_signal_emit_by_name (G_OBJECT (source), "end-of-stream", &flowret);
@@ -85,7 +85,7 @@ need_data_cb (GstElement * source, guint length, guint8 * data)
 static gboolean
 seek_data_cb (GstElement * source, guint64 reqoffset, gpointer user_data)
 {
-  GST_DEBUG_OBJECT (source, "reqoffset %" G_GUINT64_FORMAT, reqoffset);
+  GST_ERROR_OBJECT (source, "reqoffset %" G_GUINT64_FORMAT, reqoffset);
   if (reqoffset >= total_size)
     return FALSE;
   offset = reqoffset;
@@ -131,20 +131,16 @@ LLVMFuzzerTestOneInput (const guint8 * data, size_t size)
   /* Set pipeline to READY so we can provide data to appsrc */
   gst_element_set_state (GST_ELEMENT (pipeline), GST_STATE_READY);
   g_object_set (G_OBJECT (source), "size", size, NULL);
-#ifndef PULL_MODE_FUZZER
-  g_object_set (source, "stream-type", 0, NULL);
-  buf = gst_buffer_new_wrapped_full (0, (gpointer) data, size,
-      0, size, NULL, NULL);
-  g_signal_emit_by_name (G_OBJECT (source), "push-buffer", buf, &flowret);
-  gst_buffer_unref (buf);
-#else
-  g_object_set (source, "stream-type", 2, NULL);
   offset = 0;
   total_size = size;
+#ifndef PULL_MODE_FUZZER
+  g_object_set (source, "stream-type", 0, NULL);
+#else
+  g_object_set (source, "stream-type", 2, NULL);
+#endif
   g_signal_connect (source, "need-data", (GCallback) need_data_cb,
       (gpointer) data);
   g_signal_connect (source, "seek-data", (GCallback) seek_data_cb, NULL);
-#endif
 
   /* Set pipeline to PAUSED and wait (typefind will either fail or succeed) */
   gst_element_set_state (GST_ELEMENT (pipeline), GST_STATE_PAUSED);
