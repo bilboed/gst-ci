@@ -41,7 +41,13 @@ echo
 BUILD_CFLAGS="$CFLAGS `pkg-config --cflags $COMMON_DEPS $TARGET_DEPS`"
 BUILD_LDFLAGS="`pkg-config --libs $COMMON_DEPS $TARGET_DEPS`"
 
-$CC $BUILD_CFLAGS $BUILD_LDFLAGS -DLOCAL_FUZZ_BUILD -DPULL_MODE_FUZZER gst-discoverer.c localfuzzer.c -o gst-discoverer
+$CC $BUILD_CFLAGS $BUILD_LDFLAGS -DLOCAL_FUZZ_BUILD gst-discoverer.c localfuzzer.c -o gst-discoverer
+
+echo
+echo ">>>> BUILDING gst-discoverer_pull"
+echo
+
+$CC $BUILD_CFLAGS $BUILD_LDFLAGS -DLOCAL_FUZZ_BUILD -DPULL_MODE_FUZZER gst-discoverer.c localfuzzer.c -o gst-discoverer_pull
 
 #
 # TARGET : push-based typefind
@@ -56,4 +62,10 @@ echo
 BUILD_CFLAGS="$CFLAGS `pkg-config --cflags $COMMON_DEPS $TARGET_DEPS`"
 BUILD_LDFLAGS="`pkg-config --libs $COMMON_DEPS $TARGET_DEPS`"
 
-$CC $BUILD_CFLAGS $BUILD_LDFLAGS -DLOCAL_FUZZ_BUILD -DPULL_MODE_FUZZER typefind.c localfuzzer.c -o typefind
+$CC $BUILD_CFLAGS $BUILD_LDFLAGS -DLOCAL_FUZZ_BUILD typefind.c localfuzzer.c -o typefind
+
+echo
+echo ">>>> BUILDING typefind_pull"
+echo
+
+$CC $BUILD_CFLAGS $BUILD_LDFLAGS -DLOCAL_FUZZ_BUILD -DPULL_MODE_FUZZER typefind.c localfuzzer.c -o typefind_pull

@@ -121,6 +121,19 @@ $CXX $CXXFLAGS \
       $BUILD_LDFLAGS \
       $LIB_FUZZING_ENGINE \
       -Wl,-Bdynamic
+echo
+echo ">>>> BUILDING gst-discoverer_pull"
+echo
+
+$CC $CFLAGS $BUILD_CFLAGS -DPULL_MODE_FUZZER -c $SRC/gst-ci/fuzzing/gst-discoverer.c -o $SRC/gst-ci/fuzzing/gst-discoverer.o
+$CXX $CXXFLAGS \
+      -o $OUT/gst-discoverer_pull \
+      $PREDEPS_LDFLAGS \
+      $SRC/gst-ci/fuzzing/gst-discoverer.o \
+      $PLUGINS \
+      $BUILD_LDFLAGS \
+      $LIB_FUZZING_ENGINE \
+      -Wl,-Bdynamic
 
 #
 # TARGET : push-based typefind
@@ -145,6 +158,20 @@ BUILD_LDFLAGS="-Wl,-static `pkg-config --static --libs $COMMON_DEPS $TARGET_DEPS
 $CC $CFLAGS $BUILD_CFLAGS -c $SRC/gst-ci/fuzzing/typefind.c -o $SRC/gst-ci/fuzzing/typefind.o
 $CXX $CXXFLAGS \
       -o $OUT/typefind \
+      $PREDEPS_LDFLAGS \
+      $SRC/gst-ci/fuzzing/typefind.o \
+      $PLUGINS \
+      $BUILD_LDFLAGS \
+      $LIB_FUZZING_ENGINE \
+      -Wl,-Bdynamic
+
+echo
+echo ">>>> BUILDING typefind_pull"
+echo
+
+$CC $CFLAGS $BUILD_CFLAGS -DPULL_MODE_FUZZER -c $SRC/gst-ci/fuzzing/typefind.c -o $SRC/gst-ci/fuzzing/typefind.o
+$CXX $CXXFLAGS \
+      -o $OUT/typefind_pull \
       $PREDEPS_LDFLAGS \
       $SRC/gst-ci/fuzzing/typefind.o \
       $PLUGINS \
