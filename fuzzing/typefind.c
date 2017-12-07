@@ -64,7 +64,7 @@ need_data_cb (GstElement * source, guint length, guint8 * data)
   GstBuffer *buf;
   GstFlowReturn flowret;
 
-  GST_ERROR_OBJECT (source, "lenght:%u data:%p", length, data);
+  GST_DEBUG_OBJECT (source, "lenght:%u data:%p", length, data);
 
   if (offset >= total_size) {
     g_signal_emit_by_name (G_OBJECT (source), "end-of-stream", &flowret);
@@ -85,7 +85,7 @@ need_data_cb (GstElement * source, guint length, guint8 * data)
 static gboolean
 seek_data_cb (GstElement * source, guint64 reqoffset, gpointer user_data)
 {
-  GST_ERROR_OBJECT (source, "reqoffset %" G_GUINT64_FORMAT, reqoffset);
+  GST_DEBUG_OBJECT (source, "reqoffset %" G_GUINT64_FORMAT, reqoffset);
   if (reqoffset >= total_size)
     return FALSE;
   offset = reqoffset;
