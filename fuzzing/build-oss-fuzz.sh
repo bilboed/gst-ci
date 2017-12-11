@@ -24,7 +24,8 @@ export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
 export PATH=$PREFIX/bin:$PATH
 
 # Minimize gst-debug level/code
-export CFLAGS="$CFLAGS -DGST_LEVEL_MAX=2"
+export CFLAGS="$CFLAGS -DGST_LEVEL_MAX=2 -g -O0"
+export CXXFLAGS="$CXXFLAGS -DGST_LEVEL_MAX=2 -g -O0"
 
 #
 echo "CFLAGS : " $CFLAGS
