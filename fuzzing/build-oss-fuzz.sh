@@ -37,8 +37,8 @@ cd $WORK
 
 # 1) BUILD GLIB AND GSTREAMER
 # Note: we build glib ourselves so that we get proper malloc/free backtraces
-tar xvJf $SRC/glib-2.54.2.tar.xz
-cd glib-2.54.2
+tar xvJf $SRC/glib-2.54.3.tar.xz
+cd glib-2.54.3
 ./configure --prefix=$PREFIX --enable-static --disable-shared --disable-libmount --with-pcre=internal && make -j$(nproc) && make install
 cd ..
 
@@ -46,7 +46,7 @@ cd ..
 # with clang and the various sanitizers.
 
 # For now we only build core and base. Add other modules when/if needed
-for i in gstreamer gst-plugins-base;
+for i in gstreamer gst-plugins-base gst-plugins-good;
 do
     mkdir -p $i
     cd $i
