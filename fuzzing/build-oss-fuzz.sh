@@ -39,7 +39,7 @@ cd $WORK
 # Note: we build glib ourselves so that we get proper malloc/free backtraces
 tar xvJf $SRC/glib-2.54.3.tar.xz
 cd glib-2.54.3
-./configure --prefix=$PREFIX --enable-static --disable-shared --disable-libmount --with-pcre=internal && make -j$(nproc) && make install
+./configure --prefix=$PREFIX --enable-static --disable-shared --disable-libmount --with-pcre=internal --disable-always-build-tests && make -j$(nproc) && make install
 cd ..
 
 # Note: We don't use/build orc since it still seems to be problematic
