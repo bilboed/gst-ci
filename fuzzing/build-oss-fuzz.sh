@@ -27,6 +27,8 @@ export PATH=$PREFIX/bin:$PATH
 export CFLAGS="$CFLAGS -DGST_LEVEL_MAX=2 -g -O0"
 export CXXFLAGS="$CXXFLAGS -DGST_LEVEL_MAX=2 -g -O0"
 
+#DEBUGGING !!!
+env
 #
 echo "CFLAGS : " $CFLAGS
 echo "CXXFLAGS : " $CXXFLAGS
