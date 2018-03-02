@@ -24,8 +24,10 @@ export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
 export PATH=$PREFIX/bin:$PATH
 
 # Minimize gst-debug level/code
-export CFLAGS="$CFLAGS -DGST_LEVEL_MAX=2 -g -O0"
-export CXXFLAGS="$CXXFLAGS -DGST_LEVEL_MAX=2 -g -O0"
+#export CFLAGS="$CFLAGS -DGST_LEVEL_MAX=2 -g -O0"
+#export CXXFLAGS="$CXXFLAGS -DGST_LEVEL_MAX=2 -g -O0"
+export CFLAGS="$CFLAGS -g -O0"
+export CXXFLAGS="$CXXFLAGS -g -O0"
 
 #DEBUGGING !!!
 env
@@ -39,8 +41,8 @@ cd $WORK
 
 # 1) BUILD GLIB AND GSTREAMER
 # Note: we build glib ourselves so that we get proper malloc/free backtraces
-tar xvJf $SRC/glib-2.54.3.tar.xz
-cd glib-2.54.3
+tar xvJf $SRC/glib-2.56.1.tar.xz
+cd glib-2.56.1
 ./configure --prefix=$PREFIX --enable-static --disable-shared --disable-libmount --with-pcre=internal --disable-always-build-tests && make -j$(nproc) && make install
 cd ..
 
